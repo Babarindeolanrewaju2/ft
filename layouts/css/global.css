@@ -1,0 +1,14 @@
+@font-face {
+  font-family: "CircularStd-Medium";
+  src: local("CircularStd-Medium"),
+    url(~assets/CircularStd-Medium.otf) format("opentype");
+}
+
+html {
+  font-family: "CircularStd-Medium";
+}
+
+* {
+  margin: 0;
+  padding: 0;
+}
