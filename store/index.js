@@ -159,26 +159,44 @@ export const mutations = {
   ADD_CHOOSE(state, payload) {
     state.selected = payload.selected;
     state.error = "";
-    let choose = state.questions.map((question) => {
-      if (payload.id !== question.id) {
-        return question;
-      } else {
-        question.answers.forEach((object) => {
-          delete object["userChoice"];
-        });
-        let answer = question.answers.map((answer) => {
-          if (payload.selected == answer.answerText)
-            return {
-              ...answer,
-              userChoice: true,
-            };
-          return answer;
-        });
+    // let choose = state.questions.map((question) => {
+    //   if (payload.id !== question.id) {
+    //     return question;
+    //   } else {
+    //     question.answers.forEach((object) => {
+    //       delete object["userChoice"];
+    //     });
+    //     let answer = question.answers.map((answer) => {
+    //       if (payload.selected == answer.answerText)
+    //         return {
+    //           ...answer,
+    //           userChoice: true,
+    //         };
+    //       return answer;
+    //     });
 
-        return { ...question, answers: [...answer] };
-      }
+    //     return { ...question, answers: [...answer] };
+    //   }
+    // });
+
+    let index = state.questions.findIndex(
+      (question) => question.id === payload.id
+    );
+    state.questions[index].answers.forEach((object) => {
+      delete object["userChoice"];
     });
-    state.questions = choose;
+    state.questions[index].answers = state.questions[index].answers.map(
+      (answer) => {
+        if (payload.selected == answer.answerText)
+          return {
+            ...answer,
+            userChoice: true,
+          };
+        return answer;
+      }
+    );
+
+    // state.questions = choose;
   },
 };
 
